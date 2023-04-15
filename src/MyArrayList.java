@@ -19,13 +19,13 @@ public class MyArrayList<T> implements MyList<T> {
             //If the size of the list is equal to the length of the internal array,
             // this line creates a new array newElements that has twice the length of the current array.
             Object[] newElements= new Object[this.elements.length*2];
-            //This line checks if the size of the list is equal to the length of the internal arrayThis line copies the elements of the current array elements to the new array newElements.
-            System.arraycopy(this.elements,0,newElements,0,this.elements.length);
             //This line copies the elements of the current array to the new array
+            System.arraycopy(this.elements,0,newElements,0,this.elements.length);
+            //Sets the internal array elements to be the new array newElements
             this.elements= newElements;
-            //sets the internal array elements to be the new array newElements
+            //Sets the next empty position in the internal array elements to be the new element.
             this.elements[this.size] = element;
-
+            this.size++;
         }
     }
 }
