@@ -1,4 +1,4 @@
-public class MyArrayList<T> implements MyList<T> {
+public class MyArrayList<E> implements MyList<E> {
     // Instance variables to hold the elements and size of the list
     private Object[] elements;
     private int size;
