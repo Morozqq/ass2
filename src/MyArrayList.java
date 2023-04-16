@@ -1,19 +1,20 @@
-public class MyArrayList<E> implements MyList<E> {
-    // Instance variables to hold the elements and size of the list
+public class MyArrayList<T> implements MyList<T> {
+    // Declare an array to hold the elements and a variable to keep track of the size of the array
     private Object[] elements;
     private int size;
-    // Constructor that initializes the elements array and size to 0
+
+    // Constructor that initializes the array with a length of 10 and sets the size to 0
     public MyArrayList() {
         elements = new Object[10];
         size = 0;
     }
-    // Returns the current size of the list
-    @Override
+
+    // Return the size of the array
     public int size() {
         return size;
     }
-    // Checks if the specified object is present in the list
-    @Override
+
+    // Check if the array contains the specified object and return a boolean value
     public boolean contains(Object o) {
         for (int i = 0; i < size; i++) {
             if (elements[i].equals(o)) {
@@ -23,64 +24,103 @@ public class MyArrayList<E> implements MyList<E> {
         return false;
     }
 
-    @Override
+    // Add an element to the end of the array, resize if necessary
     public void add(T item) {
-        // Check if the elements array is full
         if (size == elements.length) {
-            // If it is, create a new array with double the size
-            Object[] newElements = new Object[2 * elements.length];
-            // Copy over the elements from the old array to the new array
-            System.arraycopy(elements, 0, newElements, 0, size);
-            // Set the elements array to the new array
+            Object[] newElements = new Object[elements.length * 2];
+            for (int i = 0; i < size; i++) {
+                newElements[i] = elements[i];
+            }
             elements = newElements;
         }
-        // Add the new item to the end of the list and increment the size
         elements[size] = item;
         size++;
     }
+
+    // Add an element at a specified index, resize if necessary, and shift existing elements to the right
     public void add(T item, int index) {
-        // Check if the index is out of bounds
         if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException();
         }
-        // Check if the elements array is full
         if (size == elements.length) {
-            // If it is, create a new array with double the size
             Object[] newElements = new Object[elements.length * 2];
-            // Copy over the elements from the old array to the new array
-            for (int i = 0; i < elements.length; i++) {
+            for (int i = 0; i < size; i++) {
                 newElements[i] = elements[i];
             }
-            // Set the elements array to the new array
             elements = newElements;
         }
-        // Shift all elements after the specified index to the right by one position
         for (int i = size; i > index; i--) {
             elements[i] = elements[i - 1];
         }
-        // Insert the new item at the specified index and increment the size
         elements[index] = item;
         size++;
     }
+
+    // Remove the specified element from the array, shift remaining elements to the left, and return a boolean value indicating success
     public boolean remove(T item) {
-        // Search for the index of the item in the elements array
-        int index = -1;
         for (int i = 0; i < size; i++) {
             if (elements[i].equals(item)) {
-                index = i;
-                break;
+                for (int j = i; j < size - 1; j++) {
+                    elements[j] = elements[j + 1];
+                }
+                size--;
+                return true;
             }
         }
-        // If the item was not found, return false
-        if (index == -1) {
-            return false;
+        return false;
+    }
+
+    // Remove the element at the specified index, shift remaining elements to the left, and return the removed element
+    public T remove(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException();
         }
-        // Shift all elements after the specified index to the left by one position
+        T removedElement = (T) elements[index];
         for (int i = index; i < size - 1; i++) {
             elements[i] = elements[i + 1];
         }
-        // Set the last element to null and decrement the size
-        elements[--size] = null;
-        return true;
+        size--;
+        return removedElement;
+    }
+
+    // Reset the array to a length of 10 and size to 0
+    public void clean() {
+        elements = new Object[10];
+        size = 0;
+    }
+
+    // Return the element at the specified index
+    public T get(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException();
+        }
+        return (T) elements[index];
+    }
+
+
+
+
+    // Method that returns the index of the first occurrence of the given object, or -1 if not found
+    public int indexOf(Object o) {
+        // Iterate through the list and return the index of the first occurrence of the object
+        for (int i = 0; i < size; i++) {
+            if (elements[i].equals(o)) {
+                return i;
+            }
+        }
+        // Return -1 if the object is not found in the list
+        return -1;
+    }
+
+    // Method that returns the index of the last occurrence of the given object, or -1 if not found
+    public int lastIndex(Object o) {
+        // Iterate through the list in reverse order and return the index of the last occurrence of the object
+        for (int i = size - 1; i >= 0; i--) {
+            if (elements[i].equals(o)) {
+                return i;
+            }
+        }
+        // Return -1 if the object is not found in the list
+        return -1;
     }
 }
