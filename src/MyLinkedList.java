@@ -182,7 +182,7 @@ public class MyLinkedList<T> implements MyList<T> {
     public void clean() {
         head = null; // Set the head pointer to null
         tail = null; // Set the tail pointer to null
-        size = 0; // Reset the size of the linked list to0
+        size = 0; // Reset the size of the linked list to 0
     }
     @Override
     public T get(int index) {
@@ -224,4 +224,24 @@ public class MyLinkedList<T> implements MyList<T> {
         }
 
         return -1;
-    } }
+    }
+    public String toString() {
+        if (head == null) {
+            return "[]";
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        Node current = head;
+        while (current != null) {
+            sb.append(current.element);
+            if (current.next != null) {
+                sb.append(", ");
+            }
+            current = current.next;
+        }
+        sb.append("]");
+        return sb.toString();
+    }
+
+}
