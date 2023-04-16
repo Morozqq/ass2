@@ -182,7 +182,7 @@ public class MyLinkedList<T> implements MyList<T> {
     public void clean() {
         head = null; // Set the head pointer to null
         tail = null; // Set the tail pointer to null
-        size = 0; // Reset the size of the linked list to 0
+        size = 0; // Reset the size of the linked list to0
     }
     @Override
     public T get(int index) {
